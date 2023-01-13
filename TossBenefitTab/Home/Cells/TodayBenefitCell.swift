@@ -29,6 +29,7 @@ class TodayBenefitCell: BaseCollectionViewCell {
     let btn = UIButton(configuration: config)
     btn.layer.cornerRadius = 5
     btn.layer.masksToBounds = true
+    btn.isUserInteractionEnabled = false
     btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
 
     return btn

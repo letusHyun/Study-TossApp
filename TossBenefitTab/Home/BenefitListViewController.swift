@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class BenefitListViewController: BaseViewController {
   
@@ -32,10 +33,12 @@ class BenefitListViewController: BaseViewController {
   //ItemIdentifierType은 Hashable을 준수하는 타입이어야 하는데, 이를 준수하는 여러개의 객체 타입이 들어가므로 AnyHashable을 사용
   var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
   //  var todaySectionItems: [AnyHashable] = [TodaySectionItem.mock]
-//  var todaySectionItems: [AnyHashable] = TodaySectionItem(point: .default, today: .today).sectionItems
-  var todaySectionItems: [AnyHashable] = [MyPoint.default, Benefit.today]
-  var otherSectionItems: [AnyHashable] = Benefit.others
-  
+  //  var todaySectionItems: [AnyHashable] = TodaySectionItem(point: .default, today: .today).sectionItems
+  //  var todaySectionItems: [AnyHashable] = [MyPoint.default, Benefit.today]
+  //  var otherSectionItems: [AnyHashable] = Benefit.others
+  @Published var todaySectionItems: [AnyHashable] = []
+  @Published var otherSectionItems: [AnyHashable] = []
+  var subscriptions = Set<AnyCancellable>()
   
   lazy var collectionView: UICollectionView = {
     let cv = UICollectionView(
@@ -56,12 +59,29 @@ class BenefitListViewController: BaseViewController {
   //MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureCollectionView()
+  }
+  
+  //network ex
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      self.todaySectionItems = TodaySectionItem(point: .default, today: .today).sectionItems
+    }
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+      self.otherSectionItems = Benefit.others
+    }
+  }
+  //MARK: - Configure
+  
+  private func configureCollectionView() {
     //Presentation
     dataSource = UICollectionViewDiffableDataSource<Section, Item>(
       collectionView: collectionView,
       cellProvider: { [weak self] collectionView, indexPath, item in
         let cell = self?.configureCell(collectionView, indexPath: indexPath, item: item)
-        
         return cell
       })
     
@@ -73,12 +93,10 @@ class BenefitListViewController: BaseViewController {
     dataSource.apply(snapshot)
   }
   
-  //MARK: - Configure
-  
   //Layout
   private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
     let spacing: CGFloat = 10
-     
+    
     let itemSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
       heightDimension: .estimated(60))
@@ -119,7 +137,28 @@ class BenefitListViewController: BaseViewController {
     }
   }
   
-  //MARK: - setup
+  override func bind() {
+    $todaySectionItems
+      .receive(on: RunLoop.main)
+      .sink { items in
+        self.applySnapshot(items: items, section: .today)
+      }
+      .store(in: &subscriptions)
+    
+    $otherSectionItems
+      .receive(on: RunLoop.main)
+      .sink { items in
+        self.applySnapshot(items: items, section: .other)
+      }
+      .store(in: &subscriptions)
+  }
+  
+  private func applySnapshot(items: [Item], section: Section) {
+    var snapshot = dataSource.snapshot()
+    snapshot.appendItems(items, toSection: section)
+    dataSource.apply(snapshot)
+  }
+  //MARK: - Setup
   override func setupLayouts() {
     view.addSubview(collectionView)
   }
