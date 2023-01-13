@@ -8,7 +8,7 @@
 import UIKit.UICollectionViewCell
 
 class BaseCollectionViewCell: UICollectionViewCell {
- 
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupLayouts()
@@ -26,3 +26,4 @@ class BaseCollectionViewCell: UICollectionViewCell {
   func setupConstraints() { }
   func bind() { }
 }
+

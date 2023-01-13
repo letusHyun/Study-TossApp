@@ -20,10 +20,13 @@
 		133F2D92296694F000A2D774 /* BenefitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133F2D91296694F000A2D774 /* BenefitCell.swift */; };
 		133F2D942966A4E100A2D774 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133F2D932966A4E100A2D774 /* BaseCollectionViewCell.swift */; };
 		133F2D962966A9BE00A2D774 /* TodaySectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133F2D952966A9BE00A2D774 /* TodaySectionItem.swift */; };
-		133F2DC2296D067800A2D774 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 133F2DC1296D067800A2D774 /* SnapKit */; };
-		133F2DC5296D068400A2D774 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 133F2DC4296D068400A2D774 /* Then */; };
 		13F1BE56296DA058008201B6 /* MyPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE55296DA058008201B6 /* MyPointViewController.swift */; };
 		13F1BE59296DAB03008201B6 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE58296DAB03008201B6 /* Preview.swift */; };
+		13F1BE5B296FED5D008201B6 /* ButtonBenefitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE5A296FED5D008201B6 /* ButtonBenefitViewController.swift */; };
+		13F1BE5F296FEE09008201B6 /* BenefitDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE5E296FEE09008201B6 /* BenefitDetails.swift */; };
+		13F1BE6229706E1A008201B6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13F1BE6129706E1A008201B6 /* SnapKit */; };
+		13F1BE6529706E25008201B6 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 13F1BE6429706E25008201B6 /* Then */; };
+		13F1BE67297100AE008201B6 /* BenefitGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE66297100AE008201B6 /* BenefitGuideView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		133F2D952966A9BE00A2D774 /* TodaySectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySectionItem.swift; sourceTree = "<group>"; };
 		13F1BE55296DA058008201B6 /* MyPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPointViewController.swift; sourceTree = "<group>"; };
 		13F1BE58296DAB03008201B6 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
+		13F1BE5A296FED5D008201B6 /* ButtonBenefitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBenefitViewController.swift; sourceTree = "<group>"; };
+		13F1BE5E296FEE09008201B6 /* BenefitDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitDetails.swift; sourceTree = "<group>"; };
+		13F1BE66297100AE008201B6 /* BenefitGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitGuideView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				133F2DC2296D067800A2D774 /* SnapKit in Frameworks */,
-				133F2DC5296D068400A2D774 /* Then in Frameworks */,
+				13F1BE6229706E1A008201B6 /* SnapKit in Frameworks */,
+				13F1BE6529706E25008201B6 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,14 +84,14 @@
 		133F2D682965EE6300A2D774 /* TossBenefitTab */ = {
 			isa = PBXGroup;
 			children = (
-				13F1BE57296DAAF5008201B6 /* Extensions */,
-				13F1BE54296DA040008201B6 /* View */,
 				133F2D8B29667A4800A2D774 /* Home */,
+				13F1BE54296DA040008201B6 /* View */,
 				133F2D8629667A1B00A2D774 /* Model */,
 				133F2D832965F4DF00A2D774 /* Base */,
+				13F1BE57296DAAF5008201B6 /* Extensions */,
 				133F2D722965EE6400A2D774 /* Assets.xcassets */,
-				133F2D742965EE6400A2D774 /* LaunchScreen.storyboard */,
 				133F2D772965EE6400A2D774 /* Info.plist */,
+				133F2D742965EE6400A2D774 /* LaunchScreen.storyboard */,
 			);
 			path = TossBenefitTab;
 			sourceTree = "<group>";
@@ -107,6 +113,7 @@
 				133F2D8729667A2E00A2D774 /* Benefit.swift */,
 				133F2D8929667A3600A2D774 /* MyPoint.swift */,
 				133F2D952966A9BE00A2D774 /* TodaySectionItem.swift */,
+				13F1BE5E296FEE09008201B6 /* BenefitDetails.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -114,8 +121,8 @@
 		133F2D8B29667A4800A2D774 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				133F2D8C2966948600A2D774 /* Cells */,
 				133F2D6D2965EE6300A2D774 /* BenefitListViewController.swift */,
+				133F2D8C2966948600A2D774 /* Cells */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -133,7 +140,8 @@
 		13F1BE54296DA040008201B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				13F1BE55296DA058008201B6 /* MyPointViewController.swift */,
+				13F1BE5C296FEDA2008201B6 /* MyPoint */,
+				13F1BE5D296FEDAA008201B6 /* Benefit */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -144,6 +152,23 @@
 				13F1BE58296DAB03008201B6 /* Preview.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13F1BE5C296FEDA2008201B6 /* MyPoint */ = {
+			isa = PBXGroup;
+			children = (
+				13F1BE55296DA058008201B6 /* MyPointViewController.swift */,
+			);
+			path = MyPoint;
+			sourceTree = "<group>";
+		};
+		13F1BE5D296FEDAA008201B6 /* Benefit */ = {
+			isa = PBXGroup;
+			children = (
+				13F1BE5A296FED5D008201B6 /* ButtonBenefitViewController.swift */,
+				13F1BE66297100AE008201B6 /* BenefitGuideView.swift */,
+			);
+			path = Benefit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,8 +188,8 @@
 			);
 			name = TossBenefitTab;
 			packageProductDependencies = (
-				133F2DC1296D067800A2D774 /* SnapKit */,
-				133F2DC4296D068400A2D774 /* Then */,
+				13F1BE6129706E1A008201B6 /* SnapKit */,
+				13F1BE6429706E25008201B6 /* Then */,
 			);
 			productName = TossBenefitTab;
 			productReference = 133F2D662965EE6300A2D774 /* TossBenefitTab.app */;
@@ -195,8 +220,8 @@
 			);
 			mainGroup = 133F2D5D2965EE6300A2D774;
 			packageReferences = (
-				133F2DC0296D067800A2D774 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				133F2DC3296D068400A2D774 /* XCRemoteSwiftPackageReference "Then" */,
+				13F1BE6029706E1A008201B6 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				13F1BE6329706E25008201B6 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 133F2D672965EE6300A2D774 /* Products */;
 			projectDirPath = "";
@@ -231,8 +256,11 @@
 				133F2D8829667A2E00A2D774 /* Benefit.swift in Sources */,
 				133F2D942966A4E100A2D774 /* BaseCollectionViewCell.swift in Sources */,
 				133F2D8E296694B800A2D774 /* MyPointCell.swift in Sources */,
+				13F1BE67297100AE008201B6 /* BenefitGuideView.swift in Sources */,
 				13F1BE59296DAB03008201B6 /* Preview.swift in Sources */,
+				13F1BE5B296FED5D008201B6 /* ButtonBenefitViewController.swift in Sources */,
 				133F2D6C2965EE6300A2D774 /* SceneDelegate.swift in Sources */,
+				13F1BE5F296FEE09008201B6 /* BenefitDetails.swift in Sources */,
 				133F2D962966A9BE00A2D774 /* TodaySectionItem.swift in Sources */,
 				13F1BE56296DA058008201B6 /* MyPointViewController.swift in Sources */,
 				133F2D92296694F000A2D774 /* BenefitCell.swift in Sources */,
@@ -446,7 +474,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		133F2DC0296D067800A2D774 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		13F1BE6029706E1A008201B6 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -454,7 +482,7 @@
 				minimumVersion = 5.6.0;
 			};
 		};
-		133F2DC3296D068400A2D774 /* XCRemoteSwiftPackageReference "Then" */ = {
+		13F1BE6329706E25008201B6 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then";
 			requirement = {
@@ -465,14 +493,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		133F2DC1296D067800A2D774 /* SnapKit */ = {
+		13F1BE6129706E1A008201B6 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 133F2DC0296D067800A2D774 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 13F1BE6029706E1A008201B6 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		133F2DC4296D068400A2D774 /* Then */ = {
+		13F1BE6429706E25008201B6 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 133F2DC3296D068400A2D774 /* XCRemoteSwiftPackageReference "Then" */;
+			package = 13F1BE6329706E25008201B6 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -23,17 +23,14 @@ class TodayBenefitCell: BaseCollectionViewCell {
   }
   
   let button: UIButton = {
-    var titleAttr = AttributedString("")
-//    titleAttr.font = .systemFont(ofSize: 20, weight: .bold)
-    
     var config = UIButton.Configuration.filled()
-//    config.attributedTitle = titleAttr
     config.contentInsets = .init(top: 10, leading: 20, bottom: 10, trailing: 20)
-    
+
     let btn = UIButton(configuration: config)
     btn.layer.cornerRadius = 5
     btn.layer.masksToBounds = true
     btn.titleLabel?.font = .boldSystemFont(ofSize: 30)
+
     return btn
   }()
   

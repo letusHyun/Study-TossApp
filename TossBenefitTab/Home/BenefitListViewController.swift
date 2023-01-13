@@ -138,7 +138,16 @@ class BenefitListViewController: BaseViewController {
 extension BenefitListViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let item = dataSource.itemIdentifier(for: indexPath)
-    print("---->\(item)")
+    
+    if let benefit = item as? Benefit {
+      let buttonVC = ButtonBenefitViewController()
+      buttonVC.benefit = benefit
+      navigationController?.pushViewController(buttonVC, animated: true)
+      
+    } else if let point = item as? MyPoint {
+      let myPointVC = MyPointViewController()
+      myPointVC.point = point
+      navigationController?.pushViewController(myPointVC, animated: true)
+    } else { }
   }
 }
-
