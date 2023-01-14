@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class ButtonBenefitViewController: BaseViewController {
   // MARK: - Properties
-  var benefit: Benefit = .today
-  var benefitDetails: BenefitDetails = .default
+  var viewModel: ButtonBenefitViewModel!
+  var subscriptions = Set<AnyCancellable>()
   
   let subTitleLabel: UILabel = {
     let st = UILabel()
@@ -20,7 +21,6 @@ class ButtonBenefitViewController: BaseViewController {
     st.textColor = .systemGray
     return st
   }()
-  
   let titleLabel: UILabel = {
     let title = UILabel()
     title.text = """
@@ -32,14 +32,12 @@ class ButtonBenefitViewController: BaseViewController {
     title.textColor = .label
     return title
   }()
-  
   let iconImageView: UIImageView = {
     let view = UIImageView()
     view.image = UIImage(named: "ic_button_benefit")
     view.contentMode = .scaleAspectFit
     return view
   }()
-  
   let button: UIButton = {
     let btn = UIButton()
     btn.setTitleColor(.white, for: .normal)
@@ -48,7 +46,6 @@ class ButtonBenefitViewController: BaseViewController {
     btn.isUserInteractionEnabled = false
     return btn
   }()
-  
   let stackView: UIStackView = {
     let sv = UIStackView()
     sv.axis = .vertical
@@ -56,10 +53,11 @@ class ButtonBenefitViewController: BaseViewController {
     sv.distribution = .fillEqually
     return sv
   }()
+  
   // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    addGuides()
+    viewModel.fetchDetails()
   }
   
   // MARK: - Setup
@@ -107,11 +105,26 @@ class ButtonBenefitViewController: BaseViewController {
   }
   
   override func bind() {
-    button.setTitle(benefit.title, for: .normal)
+    //Output
+    viewModel.$benefit
+      .receive(on: RunLoop.main)
+      .sink { [weak self] benefit in
+        self?.button.setTitle(benefit.ctaTitle, for: .normal)
+      }.store(in: &subscriptions)
+    
+    viewModel.$benefitDetails
+      .compactMap { $0 }
+      .receive(on: RunLoop.main)
+      .sink { [weak self] details in
+        self?.addGuides(details: details)
+      }.store(in: &subscriptions)
   }
   // MARK: - Private
-  private func addGuides() {
-    let guideViews: [BenefitGuideView] = benefitDetails.guides.map {
+  private func addGuides(details: BenefitDetails) {
+    let guideView = stackView.arrangedSubviews.filter { $0 is BenefitGuideView }
+    guard guideView.isEmpty else { return }
+    
+    let guideViews: [BenefitGuideView] = details.guides.map {
       let guideView = BenefitGuideView(frame: .zero)
       guideView.iconImageView.image = UIImage(systemName: $0.iconName)
       guideView.titleLabel.text = $0.guide

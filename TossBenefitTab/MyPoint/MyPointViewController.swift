@@ -8,28 +8,28 @@
 import UIKit
 import Then
 import SnapKit
+import Combine
 
 class MyPointViewController: BaseViewController {
   // MARK: - Properties
+  var viewModel: MyPointViewModel!
+  var subscriptions = Set<AnyCancellable>()
+  
   let stackView = UIStackView().then {
     $0.axis = .vertical
     $0.distribution = .fill
     $0.spacing = 5
   }
-  
   let descriptionLabel = UILabel().then {
     $0.textColor = .systemGray
     $0.font = .systemFont(ofSize: 15)
     $0.text = "내 포인트"
   }
-  
   let pointLabel = UILabel().then {
     $0.textColor = .label
     $0.font = .systemFont(ofSize: 20, weight: .bold)
     $0.text = "0 원"
   }
-  
-  
   let withdrawButton = UIButton().then {
     $0.setTitle("출금하기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -38,7 +38,6 @@ class MyPointViewController: BaseViewController {
     $0.layer.masksToBounds = true
     $0.layer.cornerRadius = 5
   }
-
   let useButton = UIButton().then {
     $0.setTitle("사용하기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -47,13 +46,11 @@ class MyPointViewController: BaseViewController {
     $0.layer.masksToBounds = true
     $0.layer.cornerRadius = 5
   }
-  
   lazy var btnSV = UIStackView().then {
     $0.axis = .horizontal
     $0.distribution = .fillEqually
     $0.spacing = 15
   }
-  
   let subDescriptionLabel = UILabel().then {
     $0.textColor = .label
     $0.text = """
@@ -64,7 +61,6 @@ class MyPointViewController: BaseViewController {
     $0.numberOfLines = 0
     $0.font = .systemFont(ofSize: 20, weight: .bold)
   }
-  
   let gatherButton: UIButton = {
     var titleAttr = AttributedString("모으기")
     titleAttr.font = .systemFont(ofSize: 18, weight: .bold)
@@ -75,13 +71,6 @@ class MyPointViewController: BaseViewController {
     config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)
     return UIButton(configuration: config)
   }()
-
-  var point: MyPoint = .default
-  
-  // MARK: - LifeCycle
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
   
   // MARK: - Setup
   override func setupLayouts() {
@@ -122,5 +111,13 @@ class MyPointViewController: BaseViewController {
   
   override func setupStyles() {
     navigationItem.largeTitleDisplayMode = .never
+  }
+  
+  override func bind() {
+    viewModel.$point
+      .receive(on: RunLoop.main)
+      .sink { [weak self] point in
+        self?.pointLabel.text = "\(point.point)원"
+      }.store(in: &subscriptions)
   }
 }

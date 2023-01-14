@@ -27,6 +27,9 @@
 		13F1BE6229706E1A008201B6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13F1BE6129706E1A008201B6 /* SnapKit */; };
 		13F1BE6529706E25008201B6 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 13F1BE6429706E25008201B6 /* Then */; };
 		13F1BE67297100AE008201B6 /* BenefitGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE66297100AE008201B6 /* BenefitGuideView.swift */; };
+		13F1BE6A29717E64008201B6 /* BenefitListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE6929717E64008201B6 /* BenefitListViewModel.swift */; };
+		13F1BE6E297187A8008201B6 /* MyPointViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE6D297187A8008201B6 /* MyPointViewModel.swift */; };
+		13F1BE732971A292008201B6 /* ButtonBenefitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F1BE722971A292008201B6 /* ButtonBenefitViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		13F1BE5A296FED5D008201B6 /* ButtonBenefitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBenefitViewController.swift; sourceTree = "<group>"; };
 		13F1BE5E296FEE09008201B6 /* BenefitDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitDetails.swift; sourceTree = "<group>"; };
 		13F1BE66297100AE008201B6 /* BenefitGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitGuideView.swift; sourceTree = "<group>"; };
+		13F1BE6929717E64008201B6 /* BenefitListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitListViewModel.swift; sourceTree = "<group>"; };
+		13F1BE6D297187A8008201B6 /* MyPointViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPointViewModel.swift; sourceTree = "<group>"; };
+		13F1BE722971A292008201B6 /* ButtonBenefitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBenefitViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,8 +90,9 @@
 		133F2D682965EE6300A2D774 /* TossBenefitTab */ = {
 			isa = PBXGroup;
 			children = (
-				133F2D8B29667A4800A2D774 /* Home */,
-				13F1BE54296DA040008201B6 /* View */,
+				13F1BE6F29719E3B008201B6 /* Home */,
+				13F1BE7129719E74008201B6 /* Benefit */,
+				13F1BE7029719E6E008201B6 /* MyPoint */,
 				133F2D8629667A1B00A2D774 /* Model */,
 				133F2D832965F4DF00A2D774 /* Base */,
 				13F1BE57296DAAF5008201B6 /* Extensions */,
@@ -118,15 +125,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		133F2D8B29667A4800A2D774 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				133F2D6D2965EE6300A2D774 /* BenefitListViewController.swift */,
-				133F2D8C2966948600A2D774 /* Cells */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
 		133F2D8C2966948600A2D774 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,15 +135,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		13F1BE54296DA040008201B6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				13F1BE5C296FEDA2008201B6 /* MyPoint */,
-				13F1BE5D296FEDAA008201B6 /* Benefit */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		13F1BE57296DAAF5008201B6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,19 +143,31 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		13F1BE5C296FEDA2008201B6 /* MyPoint */ = {
+		13F1BE6F29719E3B008201B6 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				133F2D6D2965EE6300A2D774 /* BenefitListViewController.swift */,
+				13F1BE6929717E64008201B6 /* BenefitListViewModel.swift */,
+				133F2D8C2966948600A2D774 /* Cells */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		13F1BE7029719E6E008201B6 /* MyPoint */ = {
 			isa = PBXGroup;
 			children = (
 				13F1BE55296DA058008201B6 /* MyPointViewController.swift */,
+				13F1BE6D297187A8008201B6 /* MyPointViewModel.swift */,
 			);
 			path = MyPoint;
 			sourceTree = "<group>";
 		};
-		13F1BE5D296FEDAA008201B6 /* Benefit */ = {
+		13F1BE7129719E74008201B6 /* Benefit */ = {
 			isa = PBXGroup;
 			children = (
 				13F1BE5A296FED5D008201B6 /* ButtonBenefitViewController.swift */,
 				13F1BE66297100AE008201B6 /* BenefitGuideView.swift */,
+				13F1BE722971A292008201B6 /* ButtonBenefitViewModel.swift */,
 			);
 			path = Benefit;
 			sourceTree = "<group>";
@@ -253,14 +254,17 @@
 				133F2D852965F4F100A2D774 /* BaseViewController.swift in Sources */,
 				133F2D8A29667A3600A2D774 /* MyPoint.swift in Sources */,
 				133F2D6A2965EE6300A2D774 /* AppDelegate.swift in Sources */,
+				13F1BE6A29717E64008201B6 /* BenefitListViewModel.swift in Sources */,
 				133F2D8829667A2E00A2D774 /* Benefit.swift in Sources */,
 				133F2D942966A4E100A2D774 /* BaseCollectionViewCell.swift in Sources */,
+				13F1BE732971A292008201B6 /* ButtonBenefitViewModel.swift in Sources */,
 				133F2D8E296694B800A2D774 /* MyPointCell.swift in Sources */,
 				13F1BE67297100AE008201B6 /* BenefitGuideView.swift in Sources */,
 				13F1BE59296DAB03008201B6 /* Preview.swift in Sources */,
 				13F1BE5B296FED5D008201B6 /* ButtonBenefitViewController.swift in Sources */,
 				133F2D6C2965EE6300A2D774 /* SceneDelegate.swift in Sources */,
 				13F1BE5F296FEE09008201B6 /* BenefitDetails.swift in Sources */,
+				13F1BE6E297187A8008201B6 /* MyPointViewModel.swift in Sources */,
 				133F2D962966A9BE00A2D774 /* TodaySectionItem.swift in Sources */,
 				13F1BE56296DA058008201B6 /* MyPointViewController.swift in Sources */,
 				133F2D92296694F000A2D774 /* BenefitCell.swift in Sources */,

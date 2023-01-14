@@ -10,17 +10,7 @@ import SnapKit
 import Combine
 
 class BenefitListViewController: BaseViewController {
-  
-  /*
-   1. 포인트
-   2. 오늘의 혜택
-   3. 나머지 혜택
-   
-   포인트 셀 눌렀을 때, 포인트 상세뷰로 넘어간다.
-   혜택 관련 셀을 눌렀을 때, 혜택 상세뷰로 넘어간다.
-   */
-  
-  //Hashable을 준수하는 여러가지 형태의 모델을 따를 수 있음(Benefit, MyPoint)
+
   typealias Item = AnyHashable
   
   enum Section: Int, CaseIterable {
@@ -29,16 +19,11 @@ class BenefitListViewController: BaseViewController {
   }
   
   //MARK: - Properties
+  let viewModel: BenefitListViewModel = BenefitListViewModel()
+  var subscriptions = Set<AnyCancellable>()
   
   //ItemIdentifierType은 Hashable을 준수하는 타입이어야 하는데, 이를 준수하는 여러개의 객체 타입이 들어가므로 AnyHashable을 사용
   var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
-  //  var todaySectionItems: [AnyHashable] = [TodaySectionItem.mock]
-  //  var todaySectionItems: [AnyHashable] = TodaySectionItem(point: .default, today: .today).sectionItems
-  //  var todaySectionItems: [AnyHashable] = [MyPoint.default, Benefit.today]
-  //  var otherSectionItems: [AnyHashable] = Benefit.others
-  @Published var todaySectionItems: [AnyHashable] = []
-  @Published var otherSectionItems: [AnyHashable] = []
-  var subscriptions = Set<AnyCancellable>()
   
   lazy var collectionView: UICollectionView = {
     let cv = UICollectionView(
@@ -59,23 +44,12 @@ class BenefitListViewController: BaseViewController {
   //MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     configureCollectionView()
+    viewModel.fetchIetms() //network ex
   }
   
-  //network ex
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-      self.todaySectionItems = TodaySectionItem(point: .default, today: .today).sectionItems
-    }
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-      self.otherSectionItems = Benefit.others
-    }
-  }
   //MARK: - Configure
-  
   private func configureCollectionView() {
     //Presentation
     dataSource = UICollectionViewDiffableDataSource<Section, Item>(
@@ -85,11 +59,11 @@ class BenefitListViewController: BaseViewController {
         return cell
       })
     
-    //data
+    //Data
     var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
     snapshot.appendSections(Section.allCases) //배열 순서에 따라 section 순서 결정됨
-    snapshot.appendItems(todaySectionItems, toSection: .today) //배열 순서에 따라 item 순서 결정됨
-    snapshot.appendItems(otherSectionItems, toSection: .other) //배열 순서에 따라 item 순서 결정됨
+    snapshot.appendItems([], toSection: .today) //배열 순서에 따라 item 순서 결정됨
+    snapshot.appendItems([], toSection: .other) //배열 순서에 따라 item 순서 결정됨
     dataSource.apply(snapshot)
   }
   
@@ -128,6 +102,7 @@ class BenefitListViewController: BaseViewController {
         cell.configure(item: benefit)
         return cell
       } else { return UICollectionViewCell() }
+      
     case .other:
       if let benefit = item as? Benefit {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BenefitCell", for: indexPath) as! BenefitCell
@@ -138,19 +113,37 @@ class BenefitListViewController: BaseViewController {
   }
   
   override func bind() {
-    $todaySectionItems
+    //Output: data 들어오면 view에 rendering
+    viewModel.$todaySectionItems
       .receive(on: RunLoop.main)
-      .sink { items in
-        self.applySnapshot(items: items, section: .today)
+      .sink { [weak self] items in
+        self?.applySnapshot(items: items, section: .today)
       }
       .store(in: &subscriptions)
     
-    $otherSectionItems
+    viewModel.$otherSectionItems
       .receive(on: RunLoop.main)
-      .sink { items in
-        self.applySnapshot(items: items, section: .other)
+      .sink { [weak self] items in
+        self?.applySnapshot(items: items, section: .other)
       }
       .store(in: &subscriptions)
+    
+    //Input: user interaction
+    viewModel.benefitDidTapped
+      .receive(on: RunLoop.main)
+      .sink { [weak self] benefit in
+        let buttonVC = ButtonBenefitViewController()
+        buttonVC.viewModel = ButtonBenefitViewModel(benefit: benefit)
+        self?.navigationController?.pushViewController(buttonVC, animated: true)
+      }.store(in: &subscriptions)
+    
+    viewModel.pointDidTapped
+      .receive(on: RunLoop.main)
+      .sink { [weak self] point in
+        let myPointVC = MyPointViewController()
+        myPointVC.viewModel = MyPointViewModel(point: point)
+        self?.navigationController?.pushViewController(myPointVC, animated: true)
+      }.store(in: &subscriptions)
   }
   
   private func applySnapshot(items: [Item], section: Section) {
@@ -179,14 +172,9 @@ extension BenefitListViewController: UICollectionViewDelegate {
     let item = dataSource.itemIdentifier(for: indexPath)
     
     if let benefit = item as? Benefit {
-      let buttonVC = ButtonBenefitViewController()
-      buttonVC.benefit = benefit
-      navigationController?.pushViewController(buttonVC, animated: true)
-      
+      viewModel.benefitDidTapped.send(benefit)
     } else if let point = item as? MyPoint {
-      let myPointVC = MyPointViewController()
-      myPointVC.point = point
-      navigationController?.pushViewController(myPointVC, animated: true)
+      viewModel.pointDidTapped.send(point)
     } else { }
   }
 }
